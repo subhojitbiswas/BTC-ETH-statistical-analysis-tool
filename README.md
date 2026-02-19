@@ -9,7 +9,7 @@ It is found from the analysis that BTC and ETH follows some common patterns thro
 - This application/tool fetches time series data of last 1 year (for BTC or ETH) with provided time frame (15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d). 
 - Then it calculates two time series data each for difference/split between Open-Closed or High-Low of that specified time frame.
 - Then it divided the data for 7 days each.
-- We can see Max, Average, Min, and Median of split for the specific day of the week against the timeframe
+- We can see Max, Average, Min, and mode of split for the specific day of the week against the timeframe
 - The result data is printed in a table with day of week in row and timeframe as column
 - Additionally it gives a heatmap presentation of the tabular data where green represent least volatile and red represent most volatile. Heatmap can be configured to calculate based on either max, avg, min, med value of the split (default is max).
 
@@ -24,7 +24,7 @@ ETH heatmap
 timeframe (15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d)
 
 ![alt text](max_avg_min_med.png)
-Heatmap can be calculated based on (max, avg, min and median)
+Heatmap can be calculated based on (max, avg, min and mode)
 
 
 # Install Dependencies
