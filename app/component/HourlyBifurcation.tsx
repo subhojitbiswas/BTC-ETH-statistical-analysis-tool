@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import { ckmeans, median } from "simple-statistics";
+import { ckmeans, mode } from "simple-statistics";
 
 type Data = {
     date: Date,
@@ -39,7 +39,7 @@ const HourlyBifurcation = ({ data, ochl, range }: { data: Data[]; ochl: string; 
                 modeBin = bin;
             }
         });
-        const medHL = median(modeBin);
+        const modHL = mode(modeBin);
 
         maxLength = 0;
         modeBin = [];
@@ -49,19 +49,19 @@ const HourlyBifurcation = ({ data, ochl, range }: { data: Data[]; ochl: string; 
                 modeBin = bin;
             }
         });
-        const medOC = median(modeBin);
+        const modOC = mode(modeBin);
         return {
             'oc': {
                 'max': Math.round(Math.max(...deltas.map((ele: { openCloseDelta: number; }) => Math.abs(ele.openCloseDelta))) * 100) / 100,
                 'min': Math.round(Math.min(...deltas.map((ele: { openCloseDelta: number; }) => Math.abs(ele.openCloseDelta))) * 100) / 100,
                 'avg': Math.round((deltas.reduce((acc: number, cum: { openCloseDelta: number; }) => acc + Math.abs(cum.openCloseDelta), 0) / deltas.length) * 100) / 100,
-                'med': Math.round(medOC*100)/100
+                'mod': Math.round(modOC*100)/100
             },
             'hl': {
                 'max': Math.round(Math.max(...deltas.map((ele: { highLowDelta: number; }) => Math.abs(ele.highLowDelta))) * 100) / 100,
                 'min': Math.round(Math.min(...deltas.map((ele: { highLowDelta: number; }) => Math.abs(ele.highLowDelta))) * 100) / 100,
                 'avg': Math.round((deltas.reduce((acc: number, cum: { highLowDelta: number; }) => acc + Math.abs(cum.highLowDelta), 0) / deltas.length) * 100) / 100,
-                'med': Math.round(medHL*100)/100
+                'mod': Math.round(modHL*100)/100
 
             }
         };
@@ -111,7 +111,7 @@ const HourlyBifurcation = ({ data, ochl, range }: { data: Data[]; ochl: string; 
             dayNames.forEach((day) => {
                 Object.keys(flippedArray).sort().forEach((flip) => {
                     let tempOCHL = ochl as 'oc' | 'hl';
-                    let tempRange = range as 'max' | 'min' | 'avg'
+                    let tempRange = range as 'max' | 'min' | 'avg' | 'mod';
                     max = Math.max(max, calculateRange(threeDArray[day][flip])[tempOCHL][tempRange]);
                 })
             })
@@ -157,7 +157,7 @@ const HourlyBifurcation = ({ data, ochl, range }: { data: Data[]; ochl: string; 
                     if (Object.keys(threeDArray).find((ele) => ele === dayName) && Object.keys(threeDArray[dayName]).find((ele) => ele === timeSlot)) {
                         let displayValue = calculateRange(threeDArray[dayName][timeSlot]);
                         let tempOCHL = ochl as 'oc' | 'hl';
-                        let tempRange = range as 'max' | 'min' | 'avg' | 'med'
+                        let tempRange = range as 'max' | 'min' | 'avg' | 'mod'
                         let tempStyle = classCalculator(displayValue[tempOCHL][tempRange], maxHL) as keyof typeof styles;
                         return (
                             <DataTable.Cell key={timeSlot + '' + dayName} style={[styles[tempStyle] as StyleProp<ViewStyle>, checkColBorder(dayName) ? styles.borderedCell : '']}>
@@ -183,9 +183,9 @@ const HourlyBifurcation = ({ data, ochl, range }: { data: Data[]; ochl: string; 
                                         <DataTable.Cell><View><Text key={timeSlot + '12' + dayName} style={styles.timeSlot}>{displayValue['hl']['min']}</Text></View></DataTable.Cell>
                                     </DataTable.Row>
                                     <DataTable.Row>
-                                        <DataTable.Cell><View><Text key={timeSlot + '13' + dayName} style={styles.timeSlot}>MED</Text></View></DataTable.Cell>
-                                        <DataTable.Cell><View><Text key={timeSlot + '14' + dayName} style={styles.timeSlot}>{displayValue['oc']['med']}</Text></View></DataTable.Cell>
-                                        <DataTable.Cell><View><Text key={timeSlot + '15' + dayName} style={styles.timeSlot}>{displayValue['hl']['med']}</Text></View></DataTable.Cell>
+                                        <DataTable.Cell><View><Text key={timeSlot + '13' + dayName} style={styles.timeSlot}>MOD</Text></View></DataTable.Cell>
+                                        <DataTable.Cell><View><Text key={timeSlot + '14' + dayName} style={styles.timeSlot}>{displayValue['oc']['mod']}</Text></View></DataTable.Cell>
+                                        <DataTable.Cell><View><Text key={timeSlot + '15' + dayName} style={styles.timeSlot}>{displayValue['hl']['mod']}</Text></View></DataTable.Cell>
                                     </DataTable.Row>
                                 </DataTable>
                             </DataTable.Cell>

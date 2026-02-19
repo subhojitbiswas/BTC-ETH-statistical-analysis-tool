@@ -74,7 +74,7 @@ export default function Index() {
           />
           <DropDown
             onChange={(e) => setRange(e.value)}
-            data={[{ label: 'max', value: 'max' }, { label: 'avg', value: 'avg' }, { label: 'min', value: 'min' }, { label: 'med', value: 'med' }]}
+            data={[{ label: 'max', value: 'max' }, { label: 'avg', value: 'avg' }, { label: 'min', value: 'min' }, { label: 'mod', value: 'mod' }]}
             placeholder={range}
           />
           <DropDown

@@ -11,7 +11,7 @@ It is found from the analysis that BTC and ETH follows some common patterns thro
 - Then it divided the data for 7 days each.
 - We can see Max, Average, Min, and mode of split for the specific day of the week against the timeframe
 - The result data is printed in a table with day of week in row and timeframe as column
-- Additionally it gives a heatmap presentation of the tabular data where green represent least volatile and red represent most volatile. Heatmap can be configured to calculate based on either max, avg, min, med value of the split (default is max).
+- Additionally it gives a heatmap presentation of the tabular data where green represent least volatile and red represent most volatile. Heatmap can be configured to calculate based on either max, avg, min, mod value of the split (default is max).
 
 # Demo Image
 ![alt text](btc.png)
@@ -23,8 +23,8 @@ ETH heatmap
 ![alt text](15m_to_1D.png)
 timeframe (15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d)
 
-![alt text](max_avg_min_med.png)
-Heatmap can be calculated based on (max, avg, min and mode)
+![alt text](max_avg_min_mod.png)
+Heatmap can be calculated based on (max, avg, min and mod)
 
 
 # Install Dependencies
